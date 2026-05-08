@@ -2,7 +2,7 @@ import csv
 import os
 from datetime import datetime
 
-SCORES_FILE = 'scores.csv'
+from constants import SCORES_FILE
 
 
 # ── save_score ────────────────────────────────────────────────────────────────
@@ -48,8 +48,12 @@ def load_top_scores(n: int = 10, mode: str = 'classic') -> list[dict]:
         reader = csv.DictReader(f)
         for row in reader:
             if row['mode'] == mode:
-                row['score'] = int(row['score'])
-                scores.append(row)
+                scores.append({
+                    'username' : row['username'],
+                    'score'    : int(row['score']),
+                    'mode'     : row['mode'],
+                    'timestamp': row['timestamp'],
+                })
 
     scores.sort(key=lambda x: x['score'], reverse=True)
     return scores[:n]

@@ -1,28 +1,13 @@
 import curses
+import time
 
-# ── Konstanta karakter ──────────────────────────────────────────────────────
-CHAR_WALL = '+'
-CHAR_HEAD = '@'
-CHAR_BODY = 'o'
-CHAR_FOOD = '*'
-
-# ── Konstanta papan ─────────────────────────────────────────────────────────
-BOARD_WIDTH  = 40
-BOARD_HEIGHT = 20
-
-# ── Arah gerak ──────────────────────────────────────────────────────────────
-UP    = ( 0, -1)
-DOWN  = ( 0,  1)
-LEFT  = (-1,  0)
-RIGHT = ( 1,  0)
-
-# ── Key mapping ─────────────────────────────────────────────────────────────
-KEY_UP    = ('KEY_UP',    'w', 'W')
-KEY_DOWN  = ('KEY_DOWN',  's', 'S')
-KEY_LEFT  = ('KEY_LEFT',  'a', 'A')
-KEY_RIGHT = ('KEY_RIGHT', 'd', 'D')
-KEY_QUIT  = ('q', 'Q')
-
+from constants import (
+    BOARD_WIDTH, BOARD_HEIGHT,
+    CHAR_HEAD, CHAR_BODY, CHAR_FOOD, CHAR_EMPTY, CHAR_WALL,
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_QUIT, KEY_PAUSE,
+    UP, DOWN, LEFT, RIGHT,
+    TICK_RATE
+)
 
 # ── Helper (dipanggil oleh render) ──────────────────────────────────────────
 
@@ -33,7 +18,7 @@ def get_length(snake_body: list) -> int:
 
 def is_game_over(state: dict) -> bool:
     """Cek apakah game sudah berakhir."""
-    return state.get('game_over', False)
+    return state.get('status') == 'GAMEOVER'
 
 
 # ── Fungsi display utama ────────────────────────────────────────────────────
